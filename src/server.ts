@@ -117,8 +117,10 @@ chatIO.on('connection', (socket) => {
         console.log(`Usuario con ID: ${socket.id} se unió a la sala: ${roomId}`);
         //missatge per a tots els clients de la sala
         socket.to(roomId).emit('user_joined', {
+        room: roomId,
+        author: 'Sistema',
         message: `Un nuevo usuario se ha unido a la sala.`,
-        socketId: socket.id
+        time: new Date().toLocaleTimeString()
     });
     });
 
@@ -152,7 +154,7 @@ app.get('/', (req, res) => {
 
 // Conexión a MongoDB
 mongoose
-    .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/seminarioExpress')
+    .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/seminariAPI')
     .then(() => console.log('Connected to DB'))
     .catch((error) => console.error('DB Connection Error:', error));
 
