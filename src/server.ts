@@ -115,6 +115,11 @@ chatIO.on('connection', (socket) => {
     socket.on('join_room', (roomId: string) => {
         socket.join(roomId);
         console.log(`Usuario con ID: ${socket.id} se unió a la sala: ${roomId}`);
+        //missatge per a tots els clients de la sala
+        socket.to(roomId).emit('user_joined', {
+        message: `Un nuevo usuario se ha unido a la sala.`,
+        socketId: socket.id
+    });
     });
 
     // Manejar evento para enviar un mensaje
